@@ -43,7 +43,8 @@ NSDate * MR_dateFromString(NSString *value, NSString *format)
     
     if (!formatter) {
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        NSTimeZone* timezone = [format hasSuffix:@"Z"] ? [NSTimeZone timeZoneForSecondsFromGMT:0] : [NSTimeZone localTimeZone];
+        [formatter setTimeZone:timezone];
         [formatter setLocale:[NSLocale currentLocale]];
         [formatter setDateFormat:format];
         [dictFormatterForFormat setObject:formatter forKey:format];
